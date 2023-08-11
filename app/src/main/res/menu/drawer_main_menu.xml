@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="@string/ad_cat1">
+    <item
+        android:title="@string/ad_cat1"
+        android:visible="true">
         <menu>
             <item
                 android:id="@+id/ad_my_ads"
