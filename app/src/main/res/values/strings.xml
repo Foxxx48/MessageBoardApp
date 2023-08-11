@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">MessageBoardApp</string>
+
+    <!--Menu Drawer Strings -->
+    <string name="ad_cat1">Объявления</string>
+    <string name="ad_my_ads">Мои Объявления</string>
+    <string name="ad_car">Машины</string>
+    <string name="ad_pc">ПК</string>
+    <string name="ad_smartphone">Смартфоны</string>
+    <string name="ad_dm">Бытовая техника</string>
+    <string name="ad_cat2">БУ техника</string>
+    <string name="ac_sign_up">Регистрация</string>
+    <string name="ac_sign_in">Вход</string>
+    <string name="ac_sign_out">Выход</string>
+    <string name="ac_open">Открыть</string>
+    <string name="ac_close">Закрыть</string>
+    <string name="not_reg">Войти или зарегистрироваться</string>
+    <!-- Sign Dialog -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in_action">Войти</string>
+    <string name="sign_up_action">Зарегистрироваться</string>
+    <string name="sign_in">Вход</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="sign_up_error">Не удалось зарегистрироваться</string>
+    <string name="sign_in_error">Не удалось войти</string>
+    <string name="send_verify_error">Не удалось отправить письмо для верификации</string>
+    <string name="send_verify_done">Подтвердите регистрацию в письме на вашей почте</string>
+    <string name="email_reset_password_send">Письмо для сброса пароля отправлено</string>
+    <string name="dialog_reset_email_massage">Для восстановления пароля укажите Ваш email</string>
+    <string name="link_email_to_google">Email успешно связан с Google аккаунтом</string>
 </resources>
