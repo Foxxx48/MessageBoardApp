@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "586446874026",
+    "project_id": "messageboardapp-1949f",
+    "storage_bucket": "messageboardapp-1949f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586446874026:android:611eebfc7064b3cca837d3",
+        "android_client_info": {
+          "package_name": "com.foxxx.messageboardapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586446874026-50o8snsq2nj04po6gblg4e5qbm0skepf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6yhj6JQbXeNncELHDs_pUFeoxpzAH3fQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586446874026-50o8snsq2nj04po6gblg4e5qbm0skepf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
