@@ -8,7 +8,7 @@
     <string name="ad_pc">ПК</string>
     <string name="ad_smartphone">Смартфоны</string>
     <string name="ad_dm">Бытовая техника</string>
-    <string name="ad_cat2">БУ техника</string>
+    <string name="ad_cat2">Аккаунт</string>
     <string name="ac_sign_up">Регистрация</string>
     <string name="ac_sign_in">Вход</string>
     <string name="ac_sign_out">Выход</string>
@@ -30,4 +30,10 @@
     <string name="email_reset_password_send">Письмо для сброса пароля отправлено</string>
     <string name="dialog_reset_email_massage">Для восстановления пароля укажите Ваш email</string>
     <string name="link_email_to_google">Email успешно связан с Google аккаунтом</string>
+    <string name="The_account_already_exists">Аккаунт уже существует!</string>
+    <string name="min_password">Слабый пароль! Используйте пароль с минимум 6 символами</string>
+    <string name="wrong_email_format">Не правильный формат Email</string>
+    <string name="wrong_format_or_email">Не правильный Email или формат Email</string>
+    <string name="wrong_password_or_email">Неверный пароль или Email</string>
+    <string name="enter_into_acc_or_use_google">Войдите в аккаунт или используйте вход с помощью Google</string>
 </resources>
