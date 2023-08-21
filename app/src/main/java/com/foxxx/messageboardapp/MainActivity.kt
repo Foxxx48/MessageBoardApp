@@ -20,7 +20,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
     private lateinit var tvAccount: TextView
+
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -37,14 +39,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
+        if (requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                if (account != null){
+                if (account != null) {
                     dialogHelper.accHelper.signInFirebaseWithGoogle(account.idToken!!)
                 }
-            }catch (e: ApiException){
+            } catch (e: ApiException) {
                 Log.d("MyLog", "API error: ${e.message}")
             }
             /*
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             navView.setNavigationItemSelectedListener(this@MainActivity)
 
-            tvAccount = binding.navView.getHeaderView(0).findViewById(R.id.tvAccountEmail)
+            tvAccount = navView.getHeaderView(0).findViewById(R.id.tvAccountEmail)
 
         }
     }
@@ -117,7 +119,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun uiUpdate(user: FirebaseUser?) {
-
         tvAccount.text = if (user == null) {
             resources.getString(R.string.not_reg)
         } else {

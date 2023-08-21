@@ -14,7 +14,7 @@
     <string name="ac_sign_out">Выход</string>
     <string name="ac_open">Open</string>
     <string name="ac_close">Close</string>
-    <string name="not_reg">Войти или зарегистрироваться</string>
+    <string name="not_reg">Войдите или зарегистрируйтесь!</string>
     <!-- Sign Dialog -->
     <string name="email">Email</string>
     <string name="password">Password</string>
