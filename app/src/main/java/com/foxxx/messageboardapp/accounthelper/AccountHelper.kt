@@ -170,7 +170,6 @@ class AccountHelper(private val activity: MainActivity) {
     private fun linkEmailToGoogle(email: String, password: String) {
         val credential = EmailAuthProvider.getCredential(email, password)
         if (activity.myAuth.currentUser != null) {
-
             activity.myAuth.currentUser?.linkWithCredential(credential)
                 ?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {

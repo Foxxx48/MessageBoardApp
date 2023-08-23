@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "586446874026-50o8snsq2nj04po6gblg4e5qbm0skepf.apps.googleusercontent.com",
+          "client_id": "586446874026-qc2ct83pudkabcukp8hd8f3s6re6rhop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foxxx.messageboardapp",
+            "certificate_hash": "7c3a1e60eb10523287942ec38b957d7a6b2cf36e"
+          }
+        },
+        {
+          "client_id": "586446874026-dr5kcf87377hgqc2ugafa805ck1qf38h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
