@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.sign_out -> {
                 uiUpdate(null)
-                myAuth.signOut()
+                dialogHelper.accHelper.singOutG()
             }
 
             R.id.sign_up -> {
