@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.foxxx.messageboardapp.databinding.ActivityMainBinding
+
 import com.foxxx.messageboardapp.dialogs.DialogConst
 import com.foxxx.messageboardapp.dialogs.DialogHelper
 import com.foxxx.messageboardapp.dialogs.GoogleAccConst
@@ -59,6 +60,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun init() {
         with(binding) {
+            setSupportActionBar(mainContent.toolbar)
+            getSupportActionBar()?.setDisplayShowTitleEnabled(false)
             val toggle =
                 ActionBarDrawerToggle(
                     this@MainActivity,
