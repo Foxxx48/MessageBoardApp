@@ -56,6 +56,7 @@ class AccountHelper(private val activity: MainActivity) {
                         linkEmailToGoogle(email, password)
                     }
                 }
+
                 is FirebaseAuthWeakPasswordException -> {
                     exception = task.exception as FirebaseAuthWeakPasswordException
                     if (exception.errorCode == FirebaseAuthConstants.ERROR_WEAK_PASSWORD) {
@@ -67,6 +68,7 @@ class AccountHelper(private val activity: MainActivity) {
                             .show()
                     }
                 }
+
                 is FirebaseAuthInvalidCredentialsException -> {
                     exception =
                         task.exception as FirebaseAuthInvalidCredentialsException
@@ -92,38 +94,33 @@ class AccountHelper(private val activity: MainActivity) {
                         activity.uiUpdate(task.result?.user)
                     } else {
                         activity.uiUpdate(user = null)
-                        if(task.exception is FirebaseAuthInvalidUserException) {
-                            Log.d("MyLog", "Exception3: + ${task.exception}")
-                            val exception =
-                                task.exception as FirebaseAuthInvalidUserException
-                            Log.d("MyLog", "Exception3 : + ErrorCode: ${exception.errorCode}")
-
-                            if (exception.errorCode == FirebaseAuthConstants.ERROR_USER_NOT_FOUND) {
-                                Toast.makeText(
-                                    activity,
-                                   "Пользователь не найден. Зарегистрируйтесь!",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                        when (task.exception) {
+                            is FirebaseAuthInvalidUserException -> {
+                                val exception =
+                                    task.exception as FirebaseAuthInvalidUserException
+                                if (exception.errorCode == FirebaseAuthConstants.ERROR_USER_NOT_FOUND) {
+                                    Toast.makeText(
+                                        activity,
+                                        "Пользователь не найден. Зарегистрируйтесь!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                             }
-                        }
 
+                            is FirebaseAuthInvalidCredentialsException -> {
+                                Log.d("MyLog", "Exception: + ${task.exception}")
+                                val exception =
+                                    task.exception as FirebaseAuthInvalidCredentialsException
+                                Log.d("MyLog", "Exception2 : + ErrorCode: ${exception.errorCode}")
 
-
-                        if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                            Log.d("MyLog", "Exception: + ${task.exception}")
-                            val exception =
-                                task.exception as FirebaseAuthInvalidCredentialsException
-                            Log.d("MyLog", "Exception2 : + ErrorCode: ${exception.errorCode}")
-
-
-                            if (exception.errorCode == FirebaseAuthConstants.ERROR_INVALID_EMAIL) {
-                                Toast.makeText(
-                                    activity,
-                                    activity.resources.getString(R.string.wrong_format_or_email),
-                                    Toast.LENGTH_LONG
-                                )
-                                    .show()
-                            } else {
+                                if (exception.errorCode == FirebaseAuthConstants.ERROR_INVALID_EMAIL) {
+                                    Toast.makeText(
+                                        activity,
+                                        activity.resources.getString(R.string.wrong_format_or_email),
+                                        Toast.LENGTH_LONG
+                                    )
+                                        .show()
+                                }
                                 if (exception.errorCode == FirebaseAuthConstants.ERROR_WRONG_PASSWORD) {
                                     Toast.makeText(
                                         activity,
@@ -134,82 +131,83 @@ class AccountHelper(private val activity: MainActivity) {
                             }
                         }
                     }
-
                 }
-        }
-    }
-
-    private fun sendEmailVerify(user: FirebaseUser) {
-        user.sendEmailVerification().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(
-                    activity,
-                    activity.resources.getString(R.string.send_verify_done),
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                Log.d("MyLog", "Send Email Exception: + ${task.exception}")
-                Toast.makeText(
-                    activity,
-                    activity.resources.getString(R.string.send_verify_error),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
 
         }
     }
 
-    private fun getSignInClient(): GoogleSignInClient {
-        val gso = GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(activity.getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
 
-        return GoogleSignIn.getClient(activity, gso)
-    }
-
-    fun signInWithGoogle() {
-        signInClient = getSignInClient()
-        val intent = signInClient.signInIntent
-        activity.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
-    }
-
-    fun singOutG() {
-        getSignInClient().signOut()
-    }
-
-    fun signInFirebaseWithGoogle(token: String) {
-        val credential = GoogleAuthProvider.getCredential(token, null)
-        activity.myAuth.signInWithCredential(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(activity, "Sign In Done", Toast.LENGTH_LONG).show()
-                activity.uiUpdate(task.result?.user)
-            } else {
-                Log.d("MyLog", "Google Sign In Exception: + ${task.exception}")
-            }
-        }
-    }
-
-    private fun linkEmailToGoogle(email: String, password: String) {
-        val credential = EmailAuthProvider.getCredential(email, password)
-        if (activity.myAuth.currentUser != null) {
-            activity.myAuth.currentUser?.linkWithCredential(credential)
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(
-                            activity,
-                            activity.resources.getString(R.string.link_email_to_google),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-        } else {
+private fun sendEmailVerify(user: FirebaseUser) {
+    user.sendEmailVerification().addOnCompleteListener { task ->
+        if (task.isSuccessful) {
             Toast.makeText(
                 activity,
-                activity.resources.getString(R.string.enter_into_acc_or_use_google),
+                activity.resources.getString(R.string.send_verify_done),
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            Log.d("MyLog", "Send Email Exception: + ${task.exception}")
+            Toast.makeText(
+                activity,
+                activity.resources.getString(R.string.send_verify_error),
                 Toast.LENGTH_LONG
             ).show()
         }
+
     }
+}
+
+private fun getSignInClient(): GoogleSignInClient {
+    val gso = GoogleSignInOptions
+        .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(activity.getString(R.string.default_web_client_id))
+        .requestEmail()
+        .build()
+
+    return GoogleSignIn.getClient(activity, gso)
+}
+
+fun signInWithGoogle() {
+    signInClient = getSignInClient()
+    val intent = signInClient.signInIntent
+    activity.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
+}
+
+fun singOutG() {
+    getSignInClient().signOut()
+}
+
+fun signInFirebaseWithGoogle(token: String) {
+    val credential = GoogleAuthProvider.getCredential(token, null)
+    activity.myAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            Toast.makeText(activity, R.string.sign_in_done, Toast.LENGTH_LONG).show()
+            activity.uiUpdate(task.result?.user)
+        } else {
+            Log.d("MyLog", "Google Sign In Exception: + ${task.exception}")
+        }
+    }
+}
+
+private fun linkEmailToGoogle(email: String, password: String) {
+    val credential = EmailAuthProvider.getCredential(email, password)
+    if (activity.myAuth.currentUser != null) {
+        activity.myAuth.currentUser?.linkWithCredential(credential)
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        activity,
+                        activity.resources.getString(R.string.link_email_to_google),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+    } else {
+        Toast.makeText(
+            activity,
+            activity.resources.getString(R.string.enter_into_acc_or_use_google),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+}
 }

@@ -36,4 +36,5 @@
     <string name="wrong_format_or_email">Не правильный Email или формат Email</string>
     <string name="wrong_password_or_email">Неверный пароль или Email</string>
     <string name="enter_into_acc_or_use_google">Войдите в аккаунт или используйте вход с помощью Google</string>
+    <string name="sign_in_done">Вы успешно зарегистрировались.</string>
 </resources>
