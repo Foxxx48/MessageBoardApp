@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
@@ -90,11 +91,30 @@ class AccountHelper(private val activity: MainActivity) {
                     if (task.isSuccessful) {
                         activity.uiUpdate(task.result?.user)
                     } else {
+                        activity.uiUpdate(user = null)
+                        if(task.exception is FirebaseAuthInvalidUserException) {
+                            Log.d("MyLog", "Exception3: + ${task.exception}")
+                            val exception =
+                                task.exception as FirebaseAuthInvalidUserException
+                            Log.d("MyLog", "Exception3 : + ErrorCode: ${exception.errorCode}")
+
+                            if (exception.errorCode == FirebaseAuthConstants.ERROR_USER_NOT_FOUND) {
+                                Toast.makeText(
+                                    activity,
+                                   "Пользователь не найден. Зарегистрируйтесь!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+
 
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
                             Log.d("MyLog", "Exception: + ${task.exception}")
                             val exception =
                                 task.exception as FirebaseAuthInvalidCredentialsException
+                            Log.d("MyLog", "Exception2 : + ErrorCode: ${exception.errorCode}")
+
 
                             if (exception.errorCode == FirebaseAuthConstants.ERROR_INVALID_EMAIL) {
                                 Toast.makeText(

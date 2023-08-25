@@ -3,6 +3,7 @@ package com.foxxx.messageboardapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -10,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.foxxx.messageboardapp.databinding.ActivityMainBinding
+
 import com.foxxx.messageboardapp.dialogs.DialogConst
 import com.foxxx.messageboardapp.dialogs.DialogHelper
 import com.foxxx.messageboardapp.dialogs.GoogleAccConst
@@ -35,7 +37,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         init()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -56,8 +57,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.id_new_ads) {
+            startActivity(EditAdsActivity.newIntentEditAdsActivity(this))
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun init() {
+        setSupportActionBar(binding.mainContent.toolbar)
+        getSupportActionBar()?.setDisplayShowTitleEnabled(false)
         with(binding) {
             val toggle =
                 ActionBarDrawerToggle(
@@ -75,6 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             tvAccount = navView.getHeaderView(0).findViewById(R.id.tvAccountEmail)
 
         }
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
