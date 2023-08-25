@@ -3,6 +3,7 @@ package com.foxxx.messageboardapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         init()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,11 +57,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.id_new_ads) {
+            startActivity(EditAdsActivity.newIntentEditAdsActivity(this))
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun init() {
+        setSupportActionBar(binding.mainContent.toolbar)
+        getSupportActionBar()?.setDisplayShowTitleEnabled(false)
         with(binding) {
-            setSupportActionBar(mainContent.toolbar)
-            getSupportActionBar()?.setDisplayShowTitleEnabled(false)
             val toggle =
                 ActionBarDrawerToggle(
                     this@MainActivity,
@@ -78,6 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             tvAccount = navView.getHeaderView(0).findViewById(R.id.tvAccountEmail)
 
         }
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
