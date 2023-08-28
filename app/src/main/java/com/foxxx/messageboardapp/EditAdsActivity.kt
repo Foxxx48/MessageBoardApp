@@ -2,11 +2,10 @@ package com.foxxx.messageboardapp
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import com.foxxx.messageboardapp.databinding.ActivityEditAdsBinding
+import com.foxxx.messageboardapp.dialogs.DialogSpinner
 import com.foxxx.messageboardapp.utils.CityHelper
 
 class EditAdsActivity : AppCompatActivity() {
@@ -17,16 +16,10 @@ class EditAdsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Log.d("EditADSActivity", "${CityHelper.getAllCountries(this)}")
+        val listCountries = CityHelper.getAllCountries(this)
+        val dialog = DialogSpinner()
+        dialog.showSpinnerDialog(this, listCountries)
 
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            CityHelper.getAllCountries(this)
-
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spCountry.adapter = adapter
 
     }
 

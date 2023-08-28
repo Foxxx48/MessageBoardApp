@@ -6,6 +6,7 @@ import android.util.Log
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
+import java.util.Locale
 
 object CityHelper {
     @SuppressLint("SuspiciousIndentation")
@@ -32,5 +33,21 @@ object CityHelper {
         }
 
         return tempArray
+    }
+
+    fun filterListData(list: List<String>, searchText: String?): ArrayList<String> {
+        val tempList = arrayListOf<String>()
+        tempList.clear()
+        if(searchText == null) {
+            tempList.add("No result")
+            return tempList
+        }
+        for (searched: String in list) {
+            if (searched.lowercase(Locale.ROOT).startsWith(searchText.lowercase(Locale.ROOT))) {
+                tempList.add(searched)
+            }
+        }
+        if (tempList.size == 0) tempList.add("No Result")
+        return tempList
     }
 }
