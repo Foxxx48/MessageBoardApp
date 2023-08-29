@@ -8,6 +8,7 @@ import com.foxxx.messageboardapp.R
 import com.foxxx.messageboardapp.databinding.SpinerDialogItemBinding
 
 class RcvDialogSpinnerAdapter: RecyclerView.Adapter<SpViewHolder>() {
+    private var onItemClickListener : OnItemClickListener? = null
 
     private val listItems = mutableListOf<String>()
 
@@ -26,7 +27,10 @@ class RcvDialogSpinnerAdapter: RecyclerView.Adapter<SpViewHolder>() {
         Log.d("Adapter", "onBindViewHolder: ${listItems[position]}")
         val item = listItems[position]
         with(holder) {
-            binding.itemTextView.text = item
+            binding.dialogItemTextView.text = item
+            binding.dialogItemTextView.setOnClickListener {
+                onItemClickListener?.onClick(item)
+            }
 
         }
     }
@@ -35,6 +39,14 @@ class RcvDialogSpinnerAdapter: RecyclerView.Adapter<SpViewHolder>() {
         listItems.clear()
         listItems.addAll(list)
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickListener {
+        fun onClick(item: String)
+    }
+
+    fun onItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
     }
 
 }

@@ -37,4 +37,8 @@
     <string name="wrong_password_or_email">Неверный пароль или Email</string>
     <string name="enter_into_acc_or_use_google">Войдите в аккаунт или используйте вход с помощью Google</string>
     <string name="sign_in_done">Вы успешно зарегистрировались.</string>
+
+    <!-- Edit activity -->
+    <string name="select_country">🌎 Выберете страну</string>
+    <string name="select_city">🏬 Выберете город</string>
 </resources>

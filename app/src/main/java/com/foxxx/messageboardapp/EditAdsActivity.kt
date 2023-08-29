@@ -9,19 +9,34 @@ import com.foxxx.messageboardapp.dialogs.DialogSpinner
 import com.foxxx.messageboardapp.utils.CityHelper
 
 class EditAdsActivity : AppCompatActivity() {
-    private val binding by lazy {
+
+     val binding by lazy {
         ActivityEditAdsBinding.inflate(layoutInflater)
     }
+
+    private val dialog = DialogSpinner()
+    private var listCountries = arrayListOf<String>()
+    private var listCities = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val listCountries = CityHelper.getAllCountries(this)
-        val dialog = DialogSpinner()
-        dialog.showSpinnerDialog(this, listCountries)
+        init()
 
+        binding.tvCountrySearch.setOnClickListener {
+            dialog.showSpinnerDialog(this, listCountries)
+
+        }
+
+//        dialog.showSpinnerDialog(this, listCountries)
+        CityHelper.showCities(this, "Russia")
+    }
+
+    private fun init() {
+        listCountries = CityHelper.getAllCountries(this)
 
     }
+
 
     companion object {
         fun newIntentEditAdsActivity(context: Context) =
