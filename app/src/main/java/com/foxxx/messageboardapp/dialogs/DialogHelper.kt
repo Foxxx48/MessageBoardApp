@@ -11,7 +11,6 @@ import com.foxxx.messageboardapp.databinding.SignDialogBinding
 class DialogHelper(private val activity: MainActivity) {
 
     val accHelper = AccountHelper(activity)
-
     fun createSignInDialog(index: Int) {
         val builder = AlertDialog.Builder(activity)
         val rootDialogElement = SignDialogBinding.inflate(activity.layoutInflater)
@@ -63,7 +62,11 @@ class DialogHelper(private val activity: MainActivity) {
             activity.myAuth.sendPasswordResetEmail(rootDialogElement.edSignEmail.text.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(activity, R.string.email_reset_password_send, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            activity,
+                            R.string.email_reset_password_send,
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
                 }
@@ -76,11 +79,13 @@ class DialogHelper(private val activity: MainActivity) {
     private fun setDialogState(index: Int, rootDialogElement: SignDialogBinding) {
         if (index == DialogConst.SIGN_UP_STATE) {
             rootDialogElement.tvSignTitle.text = activity.resources.getString(R.string.sign_up)
-            rootDialogElement.btnSignUpIn.text = activity.resources.getString(R.string.sign_up_action)
+            rootDialogElement.btnSignUpIn.text =
+                activity.resources.getString(R.string.sign_up_action)
 
         } else {
             rootDialogElement.tvSignTitle.text = activity.resources.getString(R.string.sign_in)
-            rootDialogElement.btnSignUpIn.text = activity.resources.getString(R.string.sign_in_action)
+            rootDialogElement.btnSignUpIn.text =
+                activity.resources.getString(R.string.sign_in_action)
             rootDialogElement.btnForgotPassword.visibility = View.VISIBLE
         }
     }

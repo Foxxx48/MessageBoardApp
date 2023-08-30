@@ -41,4 +41,5 @@
     <!-- Edit activity -->
     <string name="select_country">🌎 Выберете страну</string>
     <string name="select_city">🏬 Выберете город</string>
+    <string name="no_country_selected">Страна не выбрана</string>
 </resources>

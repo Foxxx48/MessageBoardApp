@@ -4,16 +4,16 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.foxxx.messageboardapp.EditAdsActivity
 import com.foxxx.messageboardapp.R
 import com.foxxx.messageboardapp.dialogs.adapter.RcvDialogSpinnerAdapter
 import com.foxxx.messageboardapp.utils.CityHelper
 
 class DialogSpinner() {
+    fun showSpinnerDialog(context: Context, list: ArrayList<String>, itemTextView: TextView) {
 
-    fun showSpinnerDialog(context: Context, list: ArrayList<String>) {
         val rootView = LayoutInflater.from(context).inflate(R.layout.spinner_dialog, null)
 
         val builder = AlertDialog.Builder(context)
@@ -24,25 +24,21 @@ class DialogSpinner() {
         val sv = rootView.findViewById<SearchView>(R.id.sv_spinner)
         val adapter = RcvDialogSpinnerAdapter()
         adapter.updateAdapter(list)
+
         adapter.onItemClickListener(
             object : RcvDialogSpinnerAdapter.OnItemClickListener {
                 override fun onClick(item: String) {
-                    (context as EditAdsActivity).binding.tvCountrySearch.text = item
+                    itemTextView.text = item
                     dialog.dismiss()
                 }
             }
         )
 
-
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.rv_spinner_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-
-
         setSearchViewListener(adapter, sv, list)
-
-
     }
 
     private fun setSearchViewListener(
@@ -60,10 +56,6 @@ class DialogSpinner() {
                 adapter.updateAdapter(tempList)
                 return true
             }
-
         })
-
-
     }
-
 }

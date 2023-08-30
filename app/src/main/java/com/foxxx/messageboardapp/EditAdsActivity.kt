@@ -3,6 +3,7 @@ package com.foxxx.messageboardapp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.foxxx.messageboardapp.databinding.ActivityEditAdsBinding
 import com.foxxx.messageboardapp.dialogs.DialogSpinner
@@ -10,7 +11,7 @@ import com.foxxx.messageboardapp.utils.CityHelper
 
 class EditAdsActivity : AppCompatActivity() {
 
-     val binding by lazy {
+    private val binding by lazy {
         ActivityEditAdsBinding.inflate(layoutInflater)
     }
 
@@ -18,26 +19,42 @@ class EditAdsActivity : AppCompatActivity() {
     private var listCountries = arrayListOf<String>()
     private var listCities = arrayListOf<String>()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        init()
 
         binding.tvCountrySearch.setOnClickListener {
-            dialog.showSpinnerDialog(this, listCountries)
-
+            listCountries = CityHelper.getAllCountries(this)
+            dialog.showSpinnerDialog(
+                context = this,
+                list = listCountries,
+                itemTextView = binding.tvCountrySearch
+            )
+            if (binding.tvCitySearch.text.toString() != getString(R.string.select_city)) {
+                binding.tvCitySearch.text = getString(R.string.select_city)
+            }
         }
 
-//        dialog.showSpinnerDialog(this, listCountries)
-        CityHelper.showCities(this, "Russia")
+
+        binding.tvCitySearch.setOnClickListener {
+            val selectedCountry = binding.tvCountrySearch.text.toString()
+            if (selectedCountry != getString(R.string.select_country)) {
+                listCities = CityHelper.getAllCitiesFromCountry(
+                    this,
+                    selectedCountry
+                )
+                dialog.showSpinnerDialog(
+                    context = this,
+                    list = listCities,
+                    itemTextView = binding.tvCitySearch
+                )
+            } else {
+                Toast.makeText(this, getString(R.string.no_country_selected), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
-
-    private fun init() {
-        listCountries = CityHelper.getAllCountries(this)
-
-    }
-
-
     companion object {
         fun newIntentEditAdsActivity(context: Context) =
             Intent(context, EditAdsActivity::class.java)
