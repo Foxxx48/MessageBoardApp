@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.foxxx.messageboardapp.databinding.ActivityEditAdsBinding
 import com.foxxx.messageboardapp.dialogs.DialogSpinner
 import com.foxxx.messageboardapp.utils.CityHelper
+import com.foxxx.messageboardapp.utils.ImagePicker
+
 
 class EditAdsActivity : AppCompatActivity() {
 
@@ -18,6 +20,7 @@ class EditAdsActivity : AppCompatActivity() {
     private val dialog = DialogSpinner()
     private var listCountries = arrayListOf<String>()
     private var listCities = arrayListOf<String>()
+    private var isImagesPermissionGranted = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +39,6 @@ class EditAdsActivity : AppCompatActivity() {
             }
         }
 
-
         binding.tvCitySearch.setOnClickListener {
             val selectedCountry = binding.tvCountrySearch.text.toString()
             if (selectedCountry != getString(R.string.select_country)) {
@@ -54,7 +56,40 @@ class EditAdsActivity : AppCompatActivity() {
                     .show()
             }
         }
+
+        binding.imageButtonEdit.setOnClickListener {
+            ImagePicker.pixLauncher(this, 1)
+
+        }
     }
+
+
+
+
+
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        when (requestCode) {
+//            PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
+//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    isImagesPermissionGranted = true
+//                } else {
+//                    isImagesPermissionGranted = false
+//                    Toast.makeText(
+//                        this,
+//                        "Approve permissions to open Pix ImagePicker",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                }
+//                return
+//            }
+//        }
+//    }
+
     companion object {
         fun newIntentEditAdsActivity(context: Context) =
             Intent(context, EditAdsActivity::class.java)
