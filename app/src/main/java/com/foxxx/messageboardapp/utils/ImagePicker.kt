@@ -2,7 +2,7 @@ package com.foxxx.messageboardapp.utils
 
 import android.net.Uri
 import android.util.Log
-import com.foxxx.messageboardapp.EditAdsActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.foxxx.messageboardapp.R
 import io.ak1.pix.helpers.PixEventCallback
 import io.ak1.pix.helpers.addPixToActivity
@@ -30,11 +30,17 @@ object ImagePicker {
         return options
     }
 
-    fun pixLauncher(editAdsActivity: EditAdsActivity, imageCount: Int) {
-        editAdsActivity.addPixToActivity(R.id.pixCameraContainer, getOptions(imageCount)) {
+    fun pixLauncher(activity: AppCompatActivity, imageCount: Int) {
+        activity.addPixToActivity(R.id.pixCameraContainer, getOptions(imageCount)) {
             when (it.status) {
 
                 PixEventCallback.Status.SUCCESS -> {
+                    val fragmentList = activity.supportFragmentManager.fragments
+                    fragmentList.forEach {
+                        if(it.isVisible) {
+                            activity.supportFragmentManager.beginTransaction().remove(it).commit()
+                        }
+                    }
                     Log.d("pixLauncher", "${it.status.name}")
                 }
                  PixEventCallback.Status.BACK_PRESSED -> {

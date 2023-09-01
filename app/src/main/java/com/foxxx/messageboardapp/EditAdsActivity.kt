@@ -58,7 +58,7 @@ class EditAdsActivity : AppCompatActivity() {
         }
 
         binding.imageButtonEdit.setOnClickListener {
-            ImagePicker.pixLauncher(this, 1)
+            ImagePicker.pixLauncher(this, 4)
 
         }
     }
