@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.foxxx.messageboardapp.databinding.ActivityEditAdsBinding
 import com.foxxx.messageboardapp.dialogs.DialogSpinner
+import com.foxxx.messageboardapp.fragments.ListImagesFragment
 import com.foxxx.messageboardapp.utils.CityHelper
-import com.foxxx.messageboardapp.utils.ImagePicker
 
 
 class EditAdsActivity : AppCompatActivity() {
@@ -58,7 +58,12 @@ class EditAdsActivity : AppCompatActivity() {
         }
 
         binding.imageButtonEdit.setOnClickListener {
-            ImagePicker.pixLauncher(this, 4)
+//            ImagePicker.pixLauncher(this, 4)
+            val fragment = ListImagesFragment.newInstance("1", "2")
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.pixCameraContainer, fragment)
+                .commit()
 
         }
     }
