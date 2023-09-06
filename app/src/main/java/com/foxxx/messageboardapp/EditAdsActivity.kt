@@ -7,11 +7,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.foxxx.messageboardapp.databinding.ActivityEditAdsBinding
 import com.foxxx.messageboardapp.dialogs.DialogSpinner
+import com.foxxx.messageboardapp.fragments.FragmentCloseInterface
 import com.foxxx.messageboardapp.fragments.ListImagesFragment
 import com.foxxx.messageboardapp.utils.CityHelper
+import com.foxxx.messageboardapp.utils.ImagePicker
 
 
-class EditAdsActivity : AppCompatActivity() {
+class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
 
     private val binding by lazy {
         ActivityEditAdsBinding.inflate(layoutInflater)
@@ -58,45 +60,36 @@ class EditAdsActivity : AppCompatActivity() {
         }
 
         binding.imageButtonEdit.setOnClickListener {
-//            ImagePicker.pixLauncher(this, 4)
-            val fragment = ListImagesFragment.newInstance("1", "2")
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.pixCameraContainer, fragment)
-                .commit()
-
+//            if(imageAdapter.mainArray.size == 0){
+//
+//                ImagePicker.pixLauncher(this, 3)
+//
+//            } else {
+//
+//                openChooseItemFragment(null)
+//                chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
+//
+//            }
         }
     }
 
+    private fun openChooseItemFragment(newList: ArrayList<String>?){
+        val fragment = ListImagesFragment(this)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.pixCameraContainer, fragment)
+            .commit()
+    }
 
+    override fun onFragmentClose() {
+        TODO("Not yet implemented")
+    }
 
-
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<out String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        when (requestCode) {
-//            PermUtil.REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
-//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    isImagesPermissionGranted = true
-//                } else {
-//                    isImagesPermissionGranted = false
-//                    Toast.makeText(
-//                        this,
-//                        "Approve permissions to open Pix ImagePicker",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                }
-//                return
-//            }
-//        }
-//    }
 
     companion object {
         fun newIntentEditAdsActivity(context: Context) =
             Intent(context, EditAdsActivity::class.java)
     }
+
+
 }

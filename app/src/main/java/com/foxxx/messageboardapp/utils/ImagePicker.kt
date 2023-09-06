@@ -14,7 +14,9 @@ import io.ak1.pix.models.Ratio
 
 object ImagePicker {
 
-    const val REQEST_CODE_IMAGES = 999
+    const val MAX_IMAGE_COUNT = 3
+    const val REQUEST_CODE_GET_IMAGES = 999
+    const val REQUEST_CODE_GET_SINGLE_IMAGE = 998
 
     fun getOptions(imageCount: Int): Options {
         val options = Options().apply {
