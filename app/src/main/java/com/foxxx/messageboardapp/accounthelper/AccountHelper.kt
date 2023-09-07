@@ -91,6 +91,11 @@ class AccountHelper(private val activity: MainActivity) {
             activity.myAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        Toast.makeText(
+                            activity,
+                            activity.resources.getString(R.string.enter_in_akk_successful),
+                            Toast.LENGTH_LONG
+                        ).show()
                         activity.uiUpdate(task.result?.user)
                     } else {
                         activity.uiUpdate(user = null)
@@ -101,7 +106,7 @@ class AccountHelper(private val activity: MainActivity) {
                                 if (exception.errorCode == FirebaseAuthConstants.ERROR_USER_NOT_FOUND) {
                                     Toast.makeText(
                                         activity,
-                                        "Пользователь не найден. Зарегистрируйтесь!",
+                                        activity.resources.getString(R.string.user_not_found),
                                         Toast.LENGTH_LONG
                                     ).show()
                                 }
@@ -132,7 +137,6 @@ class AccountHelper(private val activity: MainActivity) {
                         }
                     }
                 }
-
         }
     }
 
