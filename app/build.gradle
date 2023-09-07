@@ -51,8 +51,19 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    //      Play Services
     implementation 'com.google.android.gms:play-services-base:18.2.0'
-
     implementation 'com.google.android.gms:play-services-drive:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:20.6.0'
+
+    //      PixImagePicker
+    implementation  'io.ak1.pix:piximagepicker:1.6.3'
+
+    //      Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //      Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+
 }

@@ -7,7 +7,7 @@
     <style name="Theme.MessageBoardApp" parent="Base.Theme.MessageBoardApp" />
 
 
-    <style name="AppTheme.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowFullscreen">true</item>
 
 
