@@ -15,7 +15,7 @@ class ImageAdapter: RecyclerView.Adapter<ImageHolder>() {
         val binding =
             ImageAdapterItemBinding.bind(
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.spiner_dialog_item, parent, false)
+                    .inflate(R.layout.image_adapter_item, parent, false)
             )
         return ImageHolder(binding)
     }
@@ -30,9 +30,6 @@ class ImageAdapter: RecyclerView.Adapter<ImageHolder>() {
     override fun getItemCount(): Int {
         return mainArray.size
     }
-
-
-
     fun update(newList : ArrayList<Bitmap>){
         mainArray.clear()
         mainArray.addAll(newList)

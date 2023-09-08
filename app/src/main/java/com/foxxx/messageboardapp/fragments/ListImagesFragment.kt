@@ -7,10 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.ProgressBar
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.foxxx.messageboardapp.EditAdsActivity
 import com.foxxx.messageboardapp.R
 import com.foxxx.messageboardapp.databinding.FragmentListImagesBinding
 import com.foxxx.messageboardapp.fragments.selectimageadapter.SelectImageRvAdapter
@@ -47,7 +49,6 @@ class ListImagesFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setUpToolbar()
         touchHelper.attachToRecyclerView(binding.rcViewSelectImage)
         binding.rcViewSelectImage.layoutManager = LinearLayoutManager(activity)
@@ -67,6 +68,7 @@ class ListImagesFragment(
         binding.tb.inflateMenu(R.menu.menu_choose_image)
         val deleteItem = binding.tb.menu.findItem(R.id.id_delete_image)
         val addImageItem = binding.tb.menu.findItem(R.id.id_add_image)
+        if(adapter.mainArray.size > 2) addImageItem?.isVisible = false
 
         binding.tb.setNavigationOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
@@ -81,32 +83,32 @@ class ListImagesFragment(
 
         addImageItem.setOnMenuItemClickListener {
             val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-            ImagePicker.pixLauncher(activity as AppCompatActivity, imageCount)
+            ImagePicker.pixLauncher(activity as EditAdsActivity, imageCount)
             Log.d("MyLog", "Add Item")
             true
         }
     }
-
     fun updateAdapter(newList: ArrayList<Uri>){
         job = CoroutineScope(Dispatchers.Main).launch {
             val bitmapList = ImageManager.imageResize(newList, requireActivity())
             adapter.updateAdapter(bitmapList, false)
         }
     }
-
-    fun setSingleImage(uri : Uri, pos : Int){
+    fun setSingleImage(uri : Uri, position : Int){
+        val pBar = binding.rcViewSelectImage[position].findViewById<ProgressBar>(R.id.pBar)
         job = CoroutineScope(Dispatchers.Main).launch {
-            val bitmapList = ImageManager.imageResize(listOf(uri), requireActivity())
-            adapter.mainArray[pos] = bitmapList[0]
-            adapter.notifyDataSetChanged()
+            pBar.visibility = View.VISIBLE
+            val bitmapList = ImageManager.imageResize(arrayListOf(uri), requireActivity())
+            pBar.visibility = View.GONE
+            adapter.mainArray[position] = bitmapList[0]
+            adapter.notifyItemChanged(position)
         }
-    }
 
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
     override fun onDetach() {
         super.onDetach()
         fragmentCloseInterface.onFragmentClose(adapter.mainArray)

@@ -19,15 +19,15 @@ import com.foxxx.messageboardapp.utils.ImagePicker
 
 class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
 
-    private val binding by lazy {
+    val binding by lazy {
         ActivityEditAdsBinding.inflate(layoutInflater)
     }
-    private var chooseImageFragment: ListImagesFragment? = null
+    var chooseImageFragment: ListImagesFragment? = null
     private val dialog = DialogSpinner()
     private var listCountries = arrayListOf<String>()
     private var listCities = arrayListOf<String>()
     private var isImagesPermissionGranted = false
-    private lateinit var imageAdapter: ImageAdapter
+    lateinit var imageAdapter: ImageAdapter
     var editImagePos = 0
 
 
@@ -84,13 +84,13 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
         imageAdapter = ImageAdapter()
         binding.vpImages.adapter = imageAdapter
     }
-    private fun openChooseItemFragment(newList: ArrayList<Uri>?){
+    fun openChooseItemFragment(newList: ArrayList<Uri>?){
         chooseImageFragment = ListImagesFragment(this, newList)
         binding.scrollViewMain.visibility = View.GONE
         val fragment = ListImagesFragment(this, newList)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.pixCameraContainer, fragment)
+            .replace(R.id.place_holder, fragment)
             .commit()
     }
 
