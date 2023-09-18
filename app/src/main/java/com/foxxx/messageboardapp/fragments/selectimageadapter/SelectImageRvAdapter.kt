@@ -8,7 +8,7 @@ import com.foxxx.messageboardapp.R
 import com.foxxx.messageboardapp.databinding.SelectImageFragmentItemBinding
 import com.foxxx.messageboardapp.utils.ItemTouchAdapter
 
-class SelectImageRvAdapter : RecyclerView.Adapter<ImageHolder>(), ItemTouchAdapter {
+class SelectImageRvAdapter() : RecyclerView.Adapter<ImageHolder>(), ItemTouchAdapter {
     val mainArray = ArrayList<Bitmap>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
@@ -31,12 +31,18 @@ class SelectImageRvAdapter : RecyclerView.Adapter<ImageHolder>(), ItemTouchAdapt
             imEditImage.setOnClickListener {
 
             }
+
             imDelete.setOnClickListener {
+
+            }
+
+            imDrag.setOnClickListener {
 
             }
 
             tvTitle.text =
                 holder.itemView.context.resources.getStringArray(R.array.title_image_array)[position]
+
             imageContent.setImageBitmap(mainArray[position])
         }
     }

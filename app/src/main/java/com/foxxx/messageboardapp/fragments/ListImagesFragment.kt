@@ -3,7 +3,6 @@ package com.foxxx.messageboardapp.fragments
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,19 +71,17 @@ class ListImagesFragment(
 
         binding.tb.setNavigationOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-            Log.d("MyLog", "Home")
+
         }
 
         deleteItem.setOnMenuItemClickListener {
             adapter.updateAdapter(ArrayList(), true)
-            Log.d("MyLog", "Delete Item")
             true
         }
 
         addImageItem.setOnMenuItemClickListener {
             val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
             ImagePicker.pixLauncher(activity as EditAdsActivity, imageCount)
-            Log.d("MyLog", "Add Item")
             true
         }
     }

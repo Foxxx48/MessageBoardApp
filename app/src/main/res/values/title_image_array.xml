@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="title_image_array">
-        <item>@string/title_equipment</item>
-        <item>@string/title_talents</item>
-        <item>@string/title_fight_result</item>
+        <item>@string/image1</item>
+        <item>@string/image2</item>
+        <item>@string/image3</item>
     </string-array>
 </resources>

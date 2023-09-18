@@ -100,9 +100,6 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
         chooseImageFragment = null
     }
 
-
-
-
     companion object {
         fun newIntentEditAdsActivity(context: Context) =
             Intent(context, EditAdsActivity::class.java)
