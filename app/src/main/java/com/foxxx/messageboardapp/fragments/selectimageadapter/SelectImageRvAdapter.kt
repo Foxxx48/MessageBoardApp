@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.foxxx.messageboardapp.R
 import com.foxxx.messageboardapp.databinding.SelectImageFragmentItemBinding
 import com.foxxx.messageboardapp.utils.ItemTouchAdapter
+import com.squareup.picasso.Picasso
 
 class SelectImageRvAdapter() : RecyclerView.Adapter<ImageHolder>(), ItemTouchAdapter {
     val mainArray = ArrayList<Bitmap>()
@@ -44,6 +45,9 @@ class SelectImageRvAdapter() : RecyclerView.Adapter<ImageHolder>(), ItemTouchAda
                 holder.itemView.context.resources.getStringArray(R.array.title_image_array)[position]
 
             imageContent.setImageBitmap(mainArray[position])
+//            Log.d("SelectImageAdapter", "${}")
+
+            Picasso.get()
         }
     }
 
@@ -53,11 +57,11 @@ class SelectImageRvAdapter() : RecyclerView.Adapter<ImageHolder>(), ItemTouchAda
         notifyDataSetChanged()
     }
 
-    override fun onMove(startPos: Int, targetPos: Int) {
-        val targetItem = mainArray[targetPos]
-        mainArray[targetPos] = mainArray[startPos]
-        mainArray[startPos] = targetItem
-        notifyItemMoved(startPos, targetPos)
+    override fun onMove(startPosition: Int, targetPosition: Int) {
+        val targetItem = mainArray[targetPosition]
+        mainArray[targetPosition] = mainArray[startPosition]
+        mainArray[startPosition] = targetItem
+        notifyItemMoved(startPosition, targetPosition)
     }
 
     override fun onClear() {

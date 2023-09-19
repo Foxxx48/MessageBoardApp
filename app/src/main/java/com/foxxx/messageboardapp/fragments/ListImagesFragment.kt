@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 
 class ListImagesFragment(
     private val fragmentCloseInterface: FragmentCloseInterface,
-    private val newList : ArrayList<Uri>?
+    private val newList : ArrayList<Bitmap>?
 ) : Fragment() {
 
     val adapter = SelectImageRvAdapter()
@@ -52,12 +52,13 @@ class ListImagesFragment(
         touchHelper.attachToRecyclerView(binding.rcViewSelectImage)
         binding.rcViewSelectImage.layoutManager = LinearLayoutManager(activity)
         binding.rcViewSelectImage.adapter = adapter
-        if (newList != null){
-            job = CoroutineScope(Dispatchers.Main).launch {
-                val bitmapList = ImageManager.imageResize(newList, requireActivity())
-                adapter.updateAdapter(bitmapList, true)
-            }
-        }
+        if(newList != null) adapter.updateAdapter(newList, true)
+//        if (newList != null){
+//            job = CoroutineScope(Dispatchers.Main).launch {
+//                val bitmapList = ImageManager.imageResize(newList, requireActivity())
+//                adapter.updateAdapter(bitmapList, true)
+//            }
+//        }
     }
     fun updateAdapterFromEdit(bitmapList : List<Bitmap>){
         adapter.updateAdapter(bitmapList, true)
@@ -81,7 +82,7 @@ class ListImagesFragment(
 
         addImageItem.setOnMenuItemClickListener {
             val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainArray.size
-            ImagePicker.pixLauncher(activity as EditAdsActivity, imageCount)
+            ImagePicker.addImages(activity as EditAdsActivity, imageCount)
             true
         }
     }

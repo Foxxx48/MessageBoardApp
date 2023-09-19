@@ -3,7 +3,6 @@ package com.foxxx.messageboardapp
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -22,11 +21,10 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
     val binding by lazy {
         ActivityEditAdsBinding.inflate(layoutInflater)
     }
-    var chooseImageFragment: ListImagesFragment? = null
+    var listImagesFragment: ListImagesFragment? = null
     private val dialog = DialogSpinner()
     private var listCountries = arrayListOf<String>()
     private var listCities = arrayListOf<String>()
-    private var isImagesPermissionGranted = false
     lateinit var imageAdapter: ImageAdapter
     var editImagePos = 0
 
@@ -73,8 +71,8 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
 
             } else {
 
-                openChooseItemFragment(null)
-                chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
+                openChooseItemFragment(imageAdapter.mainArray)
+                listImagesFragment?.updateAdapterFromEdit(imageAdapter.mainArray)
 
             }
         }
@@ -84,8 +82,8 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
         imageAdapter = ImageAdapter()
         binding.vpImages.adapter = imageAdapter
     }
-    fun openChooseItemFragment(newList: ArrayList<Uri>?){
-        chooseImageFragment = ListImagesFragment(this, newList)
+    fun openChooseItemFragment(newList: ArrayList<Bitmap>?){
+        listImagesFragment = ListImagesFragment(this, newList)
         binding.scrollViewMain.visibility = View.GONE
         val fragment = ListImagesFragment(this, newList)
         supportFragmentManager
@@ -94,10 +92,12 @@ class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
             .commit()
     }
 
+
+
     override fun onFragmentClose(list : ArrayList<Bitmap>) {
         binding.scrollViewMain.visibility = View.VISIBLE
         imageAdapter.update(list)
-        chooseImageFragment = null
+        listImagesFragment = null
     }
 
     companion object {

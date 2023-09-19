@@ -19,8 +19,6 @@ import kotlinx.coroutines.launch
 object ImagePicker {
 
     const val MAX_IMAGE_COUNT = 3
-    const val REQUEST_CODE_GET_IMAGES = 999
-    const val REQUEST_CODE_GET_SINGLE_IMAGE = 998
 
     private fun getOptions(imageCount: Int): Options {
         val options = Options().apply {
@@ -40,16 +38,16 @@ object ImagePicker {
 
                 PixEventCallback.Status.SUCCESS -> {
                     getMultiSelectImages(activity, result.data)
-                    closePixFragment(activity)
-                    Log.d("pixLauncher", "${result.status.name}")
+//                    closePixFragment(activity)
+                    Log.d("pixLauncher", result.status.name)
                 }
 
                 PixEventCallback.Status.BACK_PRESSED -> {
-                    Log.d("pixLauncher", "${result.status.name}")
+                    Log.d("pixLauncher", result.status.name)
                 }
 
                 else -> {
-                    Log.d("pixLauncher", "${result.status.name}")
+                    Log.d("pixLauncher", result.status.name)
                 }
             }
         }
@@ -57,7 +55,7 @@ object ImagePicker {
 
     private fun openChooseImageFragment(activity: EditAdsActivity) {
         activity.supportFragmentManager.beginTransaction()
-            .replace(R.id.place_holder, activity.chooseImageFragment!!).commit()
+            .replace(R.id.place_holder, activity.listImagesFragment!!).commit()
 
     }
 
@@ -71,10 +69,13 @@ object ImagePicker {
     }
 
     fun getMultiSelectImages(activity: EditAdsActivity, uris: List<Uri>) {
-        if (uris.size > 1 && activity.chooseImageFragment == null) {
-            activity.openChooseItemFragment(uris as ArrayList<Uri>)
-
-        } else if (uris.size == 1 && activity.chooseImageFragment == null) {
+        if (uris.size > 1 && activity.listImagesFragment == null) {
+            CoroutineScope(Dispatchers.Main).launch {
+                val bitmapArray =
+                    ImageManager.imageResize(uris as ArrayList<Uri>, activity) as ArrayList<Bitmap>
+                activity.openChooseItemFragment(bitmapArray)
+            }
+        } else if (uris.size == 1 && activity.listImagesFragment == null) {
 
             CoroutineScope(Dispatchers.Main).launch {
                 activity.binding.pBarLoading.visibility = View.VISIBLE
@@ -91,19 +92,20 @@ object ImagePicker {
         activity.addPixToActivity(R.id.place_holder, getOptions(imageCounter)) { result ->
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
+                    Log.d("addImages", result.status.name)
                     openChooseImageFragment(activity)
-                    activity.chooseImageFragment?.updateAdapter(
+                    activity.listImagesFragment?.updateAdapter(
                         result.data as ArrayList<Uri>
                     )
-                    Log.d("addImages", "${result.status.name}")
+
                 }
 
                 PixEventCallback.Status.BACK_PRESSED -> {
-                    Log.d("addImages", "${result.status.name}")
+                    Log.d("addImages", result.status.name)
                 }
 
                 else -> {
-                    Log.d("addImages", "${result.status.name}")
+                    Log.d("addImages", result.status.name)
                 }
             }
         }
@@ -115,21 +117,21 @@ object ImagePicker {
                 PixEventCallback.Status.SUCCESS -> {
                     openChooseImageFragment(activity)
                     singleImage(activity, result.data[0])
-                    Log.d("getSingleImage", "${result.status.name}")
+                    Log.d("getSingleImage", result.status.name)
                 }
 
                 PixEventCallback.Status.BACK_PRESSED -> {
-                    Log.d("getSingleImage", "${result.status.name}")
+                    Log.d("getSingleImage", result.status.name)
                 }
 
                 else -> {
-                    Log.d("getSingleImage", "${result.status.name}")
+                    Log.d("getSingleImage", result.status.name)
                 }
             }
         }
     }
 
     fun singleImage(activity: EditAdsActivity, uri: Uri) {
-        activity.chooseImageFragment?.setSingleImage(uri, activity.editImagePos)
+        activity.listImagesFragment?.setSingleImage(uri, activity.editImagePos)
     }
 }
